@@ -487,10 +487,10 @@ def getServices(update: Update, context):
 
 def getReplLogs(update: Update, context):
     """3.1.1 Получить логи репликации - /get_repl_logs"""
-    """
+    
     logger.info(f'Пользователь {update.message.from_user.username} ввел:\n{update.message.text}')
     
-    command = "grep 'replication' /var/log/postgresql/postgresql.log"
+    command = "cat /var/log/postgresql/postgresql.log | grep repl | tail -n 15"
     result = connectToHost(command)
     
     if result:
@@ -502,6 +502,7 @@ def getReplLogs(update: Update, context):
     else:
         update.message.reply_text('Не удалось получить логи репликации')
     """
+    logger.info(f'Пользователь {update.message.from_user.username} ввел:\n{update.message.text}')
     try:
         # Выполнение команды для получения логов
         result = subprocess.run(
@@ -516,6 +517,7 @@ def getReplLogs(update: Update, context):
             update.message.reply_text("Репликационные логи не найдены.")
     except Exception as e:
         update.message.reply_text(f"Ошибка при получении логов: {str(e)}")
+    """
 
 def getEmails(update: Update, context):
     """3.1.1 О хранимых в базе email адресах - /get_emails"""
